@@ -5,6 +5,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import {toast} from "react-hot-toast"
 
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { Modal } from "@/components/ui/modal";
@@ -40,9 +41,9 @@ export const StoreModal = () => {
       //Creating a Store
       const response = await axios.post("/api/stores", values);
 
-      console.log(response.data);
+      toast.success("Store Created");
     } catch (error) {
-      console.log(error);
+      toast.error("Something Went Wrong")
     } finally {
       setLoading(false);
     }
