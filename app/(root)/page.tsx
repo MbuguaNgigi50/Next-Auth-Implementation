@@ -1,7 +1,9 @@
-export default function Home() {
+const SetupPage = () => {
   return (
-    <p>
-      Admin Dashboard
-    </p>
+    <div className="p-4">
+      This is a protected route
+    </div>
   )
 }
+
+export default SetupPage; 
