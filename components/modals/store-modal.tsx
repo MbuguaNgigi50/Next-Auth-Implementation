@@ -1,4 +1,5 @@
 "use client";
+//This is a client component
 
 import * as z from "zod";
 import axios from "axios";
@@ -23,6 +24,7 @@ import { Button } from "@/components/ui/button";
 const formSchema = z.object({
   name: z.string().min(1),
 });
+//Creating a variable FORMSCHEMA that uses zod to keep the state. It takes in the NAME of the store that is to be created and the minimum character of the string NAME is 1
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
