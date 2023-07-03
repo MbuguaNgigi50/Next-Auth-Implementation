@@ -1,5 +1,11 @@
 "use client";
 
+/* 
+ This is a client component. 
+ 
+ */
+
+
 import { StoreModal } from "@/components/modals/store-modal";
 import { useEffect, useState } from "react";
 
