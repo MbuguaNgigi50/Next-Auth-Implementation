@@ -36,7 +36,9 @@ export function MainNavigationBar({
               ? "text-black dark:text-white"
               : "text-muted-foreground"
           )}
-        ></Link>
+        >
+          {route.label}
+        </Link>
       ))}
     </nav>
   );
