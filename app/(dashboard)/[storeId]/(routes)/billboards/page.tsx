@@ -9,3 +9,5 @@ const BillboardsPage = () => {
         </div>
     )
 }
+
+export default BillboardsPage;
