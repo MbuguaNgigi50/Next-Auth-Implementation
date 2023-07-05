@@ -7,9 +7,8 @@ import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
 export const BillboardClient = () => {
-
-    const router = useRouter();
-    const params = useParams();
+  const router = useRouter();
+  const params = useParams();
 
   return (
     <>
@@ -18,7 +17,9 @@ export const BillboardClient = () => {
           title="Billboards (0)"
           description="Manage all your billboards from one spot"
         />
-        <Button onClick={() => router.push(`/${params.storeId}/billboards/new`)}>
+        <Button
+          onClick={() => router.push(`/${params.storeId}/billboards/new`)}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add New
         </Button>
