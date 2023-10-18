@@ -14,6 +14,7 @@ This is a one-stop hub for managing all your e-commerce websites, managing reven
 - [Shadcn-ui](https://ui.shadcn.com)
 - [Supabase](https://supabase.com/)
 - [Prisma](https://www.prisma.io)
+- [Postgress]()
 - [Vercel](https://vercel.com/)
 
 ## Features
