@@ -7,7 +7,7 @@ This is a one-stop hub for managing all your e-commnerce websites, managing reve
 
 ## Tech Stack
 
-- TypeScript
+- [TypeScript](https://www.typescriptlang.org/docs/)
 - [Next.js](https://nextjs.org)
 - [Next-Auth.js](https://next-auth.js.org/)
 - [Tailwind CSS](https://tailwindcss.com)
