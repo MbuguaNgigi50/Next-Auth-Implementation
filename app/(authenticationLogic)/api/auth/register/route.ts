@@ -9,11 +9,30 @@ The registration process involves signing up with:
 
 */
 
+import { hash } from "bcrypt";
+import prisma from "../../../../../lib/prisma";
+import { NextResponse } from 'next/server';
+
 export async function POST(request: Request) {
     try {
         const { email, password } = await request.json();
         //Validation
-    } catch (error) {
-        console.log(error)
+        const hashedPassword = await hash(password, 12)
+        const user = await prisma.user.create({
+            data: {
+                email, password: hashedPassword
+            }
+        })
+        return NextResponse.json({
+            user: {
+                email: user.email,
+            }
+        })
+    } catch (err: any) {
+        return new NextResponse(JSON.stringify({
+            error: err.message
+        })), {
+            status: 500
+        }
     }
 }
