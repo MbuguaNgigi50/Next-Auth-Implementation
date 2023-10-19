@@ -2,21 +2,49 @@
 
 import * as React from "react";
 
+//Shadcn Packages
 import { cn } from "../lib/utils";
 import { Icons } from "../components/icons";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 
+//Next-Auth Packages
+import { signIn } from "next-auth/react";
+
 interface UserRegistrationAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserRegistrationAuthForm({ className, ...props }: UserRegistrationAuthFormProps) {
+	
+	//This state will be for the loading spinner 
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-	async function onSubmit(event: React.SyntheticEvent) {
+	//These states will be used to store the user input during the registration phase
+	const [fullName, setFullName] = React.useState('');
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
+
+	async function onSubmit(event: React.FormEvent) {
 		event.preventDefault();
 		setIsLoading(true);
 
+		try {
+			const res = await fetch('api/auth/register', {
+				method: 'POST',
+				body: JSON.stringify({
+					fullName, email, password
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			if (res.ok) {
+				//redirect to the sign in page
+				signIn();
+			}
+		} catch (error) {
+			
+		}
 		setTimeout(() => {
 			setIsLoading(false);
 		}, 3000);
@@ -27,12 +55,26 @@ export function UserRegistrationAuthForm({ className, ...props }: UserRegistrati
 			<form onSubmit={onSubmit}>
 				<div className="grid gap-2">
 					<div className="grid gap-1">
+						<Input
+							id="fullName"
+							value={fullName}
+							onChange={(e) => setFullName(e.target.value)}
+							placeholder="Full Name"
+							type="text"
+							autoCapitalize="none"
+							autoComplete="none"
+							autoCorrect="off"
+							disabled={isLoading}
+							required
+						/>
 						<Label className="sr-only" htmlFor="email">
 							Email
 						</Label>
 						<Input
 							id="email"
-							placeholder="name@example.com"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							placeholder="Email"
 							type="email"
 							autoCapitalize="none"
 							autoComplete="email"
@@ -42,16 +84,9 @@ export function UserRegistrationAuthForm({ className, ...props }: UserRegistrati
 						/>
 						<Input
 							id="password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
 							placeholder="Password"
-							type="password"
-							autoComplete="password"
-							autoCorrect="off"
-							disabled={isLoading}
-							required
-						/>
-						<Input
-							id="confirmPassword"
-							placeholder="Confirm Password"
 							type="password"
 							autoComplete="password"
 							autoCorrect="off"

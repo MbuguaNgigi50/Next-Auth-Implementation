@@ -13,6 +13,11 @@ export const authOptions: NextAuthOptions = {
 	session: {
 		strategy: "jwt",
 	},
+	pages: {
+		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
+    signIn: '/login',
+    verifyRequest: '/email-verification', // (used for check email message)
+  },
 	providers: [
 		CredentialsProvider({
 			//The Credentials Provider allows for signing in via Credentials(Email and Password)
