@@ -41,6 +41,7 @@ export function UserRegistrationAuthForm({ className, ...props }: UserRegistrati
 			if (res.ok) {
 				//redirect to the sign in page
 				signIn();
+				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE REGISTRATION PROCESS WAS SUCCESSFUL
 			}
 		} catch (error) {
 			
