@@ -11,6 +11,7 @@ import { Label } from "../components/ui/label";
 
 //Next-Auth Packages
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface UserRegistrationAuthFormProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
@@ -26,6 +27,9 @@ export function UserRegistrationAuthForm({
 	const [fullName, setFullName] = React.useState("");
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
+
+	//Router
+	const router = useRouter();
 
 	async function onSubmit(event: React.FormEvent) {
 		event.preventDefault();
@@ -44,9 +48,11 @@ export function UserRegistrationAuthForm({
 				},
 			});
 			if (res.ok) {
-				//redirect to the sign in page
-				signIn();
+				//redirect to the email verification page
+				router.push('/email-verification');
 				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE REGISTRATION PROCESS WAS SUCCESSFUL
+
+				//TODO CHANGE THE FEATURE SO THAT UPON SUCCESSFUL REGISTRATION, THE USER WILL BE PUSHED TO THE EMAIL VERIFICATION PAGE.
 			}
 		} catch (error) {
 			//TODO ADD A TOAST NOTIFICATION THAT WILL NOTIFY THE USER IF THERE WAS A PROBLEM DURING THE REGISTRATION PROCESS

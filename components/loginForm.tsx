@@ -55,7 +55,7 @@ export function UserLoginAuthForm({
 				setError("Invalid Email or Password");
 				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE LOGIN PROCESS FAILED
 			}
-		} catch (error: any) {}
+		} catch (err: any) {}
 
 		setTimeout(() => {
 			setIsLoading(false);

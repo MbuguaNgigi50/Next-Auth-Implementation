@@ -16,7 +16,6 @@ export const authOptions: NextAuthOptions = {
 	pages: {
 		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
     signIn: '/login',
-    verifyRequest: '/email-verification', // (used for check email message)
   },
 	providers: [
 		CredentialsProvider({
