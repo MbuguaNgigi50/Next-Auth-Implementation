@@ -1,3 +1,12 @@
+/*
+- This is the login page. From here, a user will be able to login to the application either via the Credential Login or via a Provider(Google or any other  provider that has been set up)
+- The page will contain the Login form that will be called from the components folder in the root directory.
+- The Login form will trigger the Login flow that will allow the user to log into the application.
+- For more information on how the Login flow works, refer to the API route to see the functionality.
+- There is also a link that will direct them to the Sign Up page as well.
+- There is a password reset link that is also available on this page that will direct the user to the Password reset page in the event that the user is having trouble with logging in. 
+*/
+
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,7 +48,7 @@ export default function LoginPage() {
 						>
 							<path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
 						</svg>
-						<Link href='/'>Maverick Inc.</Link>
+						<Link href="/">Maverick Inc.</Link>
 					</div>
 					<div className="relative z-20 mt-auto">
 						<blockquote className="space-y-2">

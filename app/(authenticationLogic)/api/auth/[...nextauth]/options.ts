@@ -2,10 +2,11 @@
 Importing all the relevant packages that are necessary for this to work
 */
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 //Importing the credentials provider to enable signing in via credentials
-import prisma from "../../../../../lib/prisma";
+import CredentialsProvider from "next-auth/providers/credentials";
 //Importing the prisma client from the lib folder
+import prisma from "../../../../../lib/prisma";
+//Importing Bcrypt to hash and encrypt passwords
 import { compare } from "bcrypt";
 
 export const authOptions: NextAuthOptions = {

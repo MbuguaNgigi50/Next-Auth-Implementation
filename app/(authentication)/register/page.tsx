@@ -1,3 +1,12 @@
+/*
+- This is the registration page. From here, a user will be able to register their details via the Credential Login.
+- There is also an option to register via a Provider(Google or any other  provider that has been set up)
+- The page will contain the Registration form that will be called from the components folder in the root directory.
+- The Registration form will trigger the Registration flow that will allow the user to registration themselves.
+- For more information on how the Registration flow works, refer to the API route to see the functionality.
+- There is also a link that will direct them to the Sign In page as well.
+*/
+
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
