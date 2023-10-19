@@ -59,6 +59,7 @@ export async function POST(request: Request) {
 			),
 			{
 				status: 500,
+				//TODO ADD A TOAST NOTIFICATION
 			}
 		);
 	}

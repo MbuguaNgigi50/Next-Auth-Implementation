@@ -16,7 +16,9 @@ export const authOptions: NextAuthOptions = {
 	pages: {
 		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
     signIn: '/login',
-  },
+	},
+	debug: process.env.NODE_ENV === 'development',
+	secret: process.env.NEXTAUTH_SECRET,
 	providers: [
 		CredentialsProvider({
 			//The Credentials Provider allows for signing in via Credentials(Email and Password)
@@ -37,7 +39,7 @@ export const authOptions: NextAuthOptions = {
 				// Handling the Authorization functionality
 				// This checks whether the email or the password exists for a given user
 				if (!credentials?.email || !credentials.password) {
-					return null;
+					throw new Error('Invalid Credentials');
 				}
 				//Finding the user in the database using their email
 				const user = await prisma.user.findUnique({
@@ -48,7 +50,7 @@ export const authOptions: NextAuthOptions = {
 
 				// Returns null if a user does not exist in the database
 				if (!user) {
-					return null;
+					throw new Error("User does not exist");
 				}
 
 				// Comparing the hashed password that is stored in the database to the one that the user has just entered during the sign in flow
@@ -57,9 +59,9 @@ export const authOptions: NextAuthOptions = {
 					user.password
 				);
 
-				// Returns null if the password entered by the user is invalid
+				// Returns an error if the password entered by the user is invalid
 				if (!isPasswordValid) {
-					return null;
+					throw new Error("Invalid Credentials");
 				}
 
 				return {
