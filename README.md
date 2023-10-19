@@ -14,12 +14,14 @@ This is a one-stop hub for managing all your e-commerce websites, managing reven
 - [Shadcn-ui](https://ui.shadcn.com)
 - [Supabase](https://supabase.com/)
 - [Prisma](https://www.prisma.io)
-- [Postgress]()
+- [PostgreSQL](https://www.postgresql.org/)
 - [Vercel](https://vercel.com/)
 
 ## Features
 
-- Authentication with Next-Auth
+- Authentication with Next-Auth.js - Registration and Login
+- Email Verification
+- Password Reset
 - Storefront with products and categories
 - Seller and customer workflows
 - Admin dashboard with stores, products, orders, subscriptions, and payments
