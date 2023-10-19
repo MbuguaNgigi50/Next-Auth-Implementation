@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-//Shadcn Packages
+//Shad-cn Packages
 import { cn } from "../lib/utils";
 import { Icons } from "../components/icons";
 import { Button } from "../components/ui/button";
@@ -12,39 +12,44 @@ import { Label } from "../components/ui/label";
 //Next-Auth Packages
 import { signIn } from "next-auth/react";
 
-interface UserRegistrationAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserRegistrationAuthFormProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function UserRegistrationAuthForm({ className, ...props }: UserRegistrationAuthFormProps) {
-	
-	//This state will be for the loading spinner 
+export function UserRegistrationAuthForm({
+	className,
+	...props
+}: UserRegistrationAuthFormProps) {
+	//This state will be for the loading spinner
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	//These states will be used to store the user input during the registration phase
-	const [fullName, setFullName] = React.useState('');
-	const [email, setEmail] = React.useState('');
-	const [password, setPassword] = React.useState('');
+	const [fullName, setFullName] = React.useState("");
+	const [email, setEmail] = React.useState("");
+	const [password, setPassword] = React.useState("");
 
 	async function onSubmit(event: React.FormEvent) {
 		event.preventDefault();
 		setIsLoading(true);
 
 		try {
-			const res = await fetch('api/auth/register', {
-				method: 'POST',
+			const res = await fetch("api/register", {
+				method: "POST",
 				body: JSON.stringify({
-					fullName, email, password
+					fullName,
+					email,
+					password,
 				}),
 				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
+					"Content-Type": "application/json",
+				},
+			});
 			if (res.ok) {
 				//redirect to the sign in page
 				signIn();
 				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE REGISTRATION PROCESS WAS SUCCESSFUL
 			}
 		} catch (error) {
-			
+			//TODO ADD A TOAST NOTIFICATION THAT WILL NOTIFY THE USER IF THERE WAS A PROBLEM DURING THE REGISTRATION PROCESS
 		}
 		setTimeout(() => {
 			setIsLoading(false);

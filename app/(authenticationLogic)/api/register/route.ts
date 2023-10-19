@@ -11,7 +11,7 @@ The registration process involves signing up with:
 */
 
 import { hash } from "bcrypt";
-import prisma from "../../../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -42,8 +42,8 @@ export async function POST(request: Request) {
 				email,
 				password: hashedPassword,
 			},
-        });
-        
+		});
+
 		return NextResponse.json({
 			user: {
 				name: user.name,
