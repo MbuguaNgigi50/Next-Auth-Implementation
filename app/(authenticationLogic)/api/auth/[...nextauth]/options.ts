@@ -17,8 +17,8 @@ export const authOptions: NextAuthOptions = {
 		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
     signIn: '/login',
 	},
-	debug: process.env.NODE_ENV === 'development',
-	secret: process.env.NEXTAUTH_SECRET,
+	//debug: process.env.NODE_ENV === 'development',
+	//secret: process.env.NEXTAUTH_SECRET,
 	providers: [
 		CredentialsProvider({
 			//The Credentials Provider allows for signing in via Credentials(Email and Password)
