@@ -1,7 +1,10 @@
+import { LoginButton } from "../../auth";
+
 export default function Home() {
   return (
-    <div>
-      This is the homepage
-    </div>
-  )
+		<main>
+			<div>This is the homepage</div>
+			<LoginButton />
+		</main>
+	);
 }

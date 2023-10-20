@@ -50,8 +50,8 @@ export function UserLoginAuthForm({
 			});
 			if (!res?.error) {
 				//redirect to the sign in page
-				toast.success('Login Successful')
 				router.push(callbackUrl);
+				toast.success("Login Successful");
 				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE LOGIN PROCESS WAS SUCCESSFUL
 			} else {
 				toast.error("Invalid Email or Password");
