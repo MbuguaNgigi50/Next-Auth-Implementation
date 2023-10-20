@@ -12,6 +12,7 @@ import { Label } from "../components/ui/label";
 //Next && Next-Auth Packages
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast/headless";
 
 interface UserLoginAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -25,7 +26,7 @@ export function UserLoginAuthForm({
 	//These states will be used to store the user input during the registration phase
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
-	const [error, setError] = React.useState("");
+	//const [error, setError] = React.useState("");
 
 	/*
 	Search Parameters. This will call out the callbackUrl and take us there upon sign up or sign in. If the callbackUrl does not exist, it will default to the dashboard
@@ -49,13 +50,17 @@ export function UserLoginAuthForm({
 			});
 			if (!res?.error) {
 				//redirect to the sign in page
+				toast.success('Login Successful')
 				router.push(callbackUrl);
 				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE LOGIN PROCESS WAS SUCCESSFUL
 			} else {
-				setError("Invalid Email or Password");
+				toast.error("Invalid Email or Password");
+				//setError("Invalid Email or Password");
 				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE LOGIN PROCESS FAILED
 			}
-		} catch (err: any) {}
+		} catch (err: any) {
+			toast.error('Something Went Wrong')
+		}
 
 		setTimeout(() => {
 			setIsLoading(false);

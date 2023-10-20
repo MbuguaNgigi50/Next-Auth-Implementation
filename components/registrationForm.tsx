@@ -12,6 +12,7 @@ import { Label } from "../components/ui/label";
 //Next-Auth Packages
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast/headless";
 
 interface UserRegistrationAuthFormProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
@@ -49,6 +50,7 @@ export function UserRegistrationAuthForm({
 			});
 			if (res.ok) {
 				//redirect to the email verification page
+				toast.success('Registration Successful');
 				router.push('/email-verification');
 				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE REGISTRATION PROCESS WAS SUCCESSFUL
 
@@ -56,6 +58,7 @@ export function UserRegistrationAuthForm({
 			}
 		} catch (error) {
 			//TODO ADD A TOAST NOTIFICATION THAT WILL NOTIFY THE USER IF THERE WAS A PROBLEM DURING THE REGISTRATION PROCESS
+			toast.error('Something Went Wrong');
 		}
 		setTimeout(() => {
 			setIsLoading(false);
