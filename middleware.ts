@@ -1,4 +1,4 @@
-export { default } from "next-auth/middleware";
+export { default } from 'next-auth/middleware';
 
 /*
 The Middleware is going to be applied to the entire application apart from the following routes:
@@ -19,6 +19,6 @@ All other Routes not stated here will be protected by the Next-Auth.js Middlewar
 
 export const config = {
 	matcher: [
-		"/((?!register|api|login|password-reset|about|faqs|features|pricing|privacy-policy|terms-and-conditions|/).*)"
+		'/((?!register|login|api|password-reset|about|faqs|features|pricing|privacy-policy|terms-and-conditions).*)',
 	],
 };
