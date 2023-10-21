@@ -27,12 +27,12 @@ export const authOptions: NextAuthOptions = {
 				email: {
 					label: "Email",
 					type: "email",
-					placeholder: "hello@example.com",
+					placeholder: "Email",
 				},
 				password: {
 					label: "Password",
 					type: "password",
-					placeholder: "password",
+					placeholder: "Password",
 				},
 			},
 			async authorize(credentials) {
@@ -41,6 +41,7 @@ export const authOptions: NextAuthOptions = {
 				if (!credentials?.email || !credentials.password) {
 					throw new Error('Invalid Credentials');
 				}
+
 				//Finding the user in the database using their email
 				const user = await prisma.user.findUnique({
 					where: {
