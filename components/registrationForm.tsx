@@ -50,8 +50,8 @@ export function UserRegistrationAuthForm({
 			});
 			if (res.ok) {
 				//redirect to the email verification page
-				toast.success('Registration Successful');
 				router.push('/email-verification');
+				toast.success('Registration Successful');
 				/*
 				TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE REGISTRATION PROCESS WAS SUCCESSFUL
 				*/
