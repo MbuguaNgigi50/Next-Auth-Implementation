@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
 //Shad-cn Packages
-import { cn } from "../lib/utils";
-import { Icons } from "../components/icons";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
+import { cn } from '../lib/utils';
+import { Icons } from '../components/icons';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
 
 //Next && Next-Auth Packages
-import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import toast from "react-hot-toast/headless";
+import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 interface UserLoginAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -24,15 +24,14 @@ export function UserLoginAuthForm({
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	//These states will be used to store the user input during the registration phase
-	const [email, setEmail] = React.useState("");
-	const [password, setPassword] = React.useState("");
-	const [error, setError] = React.useState("");
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
 
 	/*
 	Search Parameters. This will call out the callbackUrl and take us there upon sign up or sign in. If the callbackUrl does not exist, it will default to the dashboard
 	 */
 	const searchParams = useSearchParams();
-	const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+	const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
 
 	//Router
 	const router = useRouter();
@@ -42,36 +41,25 @@ export function UserLoginAuthForm({
 
 		try {
 			setIsLoading(true);
-			const res = await signIn("credentials", {
+			const res = await signIn('credentials', {
 				redirect: false,
 				email,
 				password,
 				callbackUrl,
 			});
 			if (!res?.error) {
-				//redirect to the sign in page
+				//A Toast Notification that alerts the user that the login was successful
+				toast.success('Login Successful');
+
+				//Redirects the user to the callbackUrl
 				router.push(callbackUrl);
-				toast.success("Login Successful");
-				/* 
-				TODO: ADD A TOAST NOTIFICATION TO SHOW THAT THE LOGIN PROCESS WAS SUCCESSFUL
-				*/
-
-				/*
-				FIXME FIX THE TOAST NOTIFICATION AS WELL AS THE REDIRECT
-				*/
 			} else {
-				toast.error("Invalid Email or Password");
-				setError("Invalid Email or Password");
-				/*
-				TODO:ADD A TOAST NOTIFICATION TO SHOW THAT THE LOGIN PROCESS FAILED
-				*/
-
-				/*
-				FIXME FIX THE TOAST NOTIFICATION AS WELL AS THE REDIRECT
-				*/
+				//A Toast Notification that alerts the user that the credentials used are invalid
+				toast.error('Invalid Credentials');
 			}
-		} catch (err: any) {
-			toast.error('Something Went Wrong')
+		} catch (error: any) {
+			//A Toast Notification that alerts the user that the was a problem during the login
+			toast.error('Something Went Wrong');
 		}
 
 		setTimeout(() => {
@@ -80,7 +68,7 @@ export function UserLoginAuthForm({
 	}
 
 	return (
-		<div className={cn("grid gap-6", className)} {...props}>
+		<div className={cn('grid gap-6', className)} {...props}>
 			<form onSubmit={onSubmit}>
 				<div className="grid gap-2">
 					<div className="grid gap-1">
@@ -134,7 +122,7 @@ export function UserLoginAuthForm({
 					<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
 				) : (
 					<Icons.google className="mr-2 h-4 w-4" />
-				)}{" "}
+				)}{' '}
 				Google
 			</Button>
 		</div>

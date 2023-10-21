@@ -12,7 +12,7 @@ import { Label } from "../components/ui/label";
 //Next-Auth Packages
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast/headless";
+import toast from "react-hot-toast";
 
 interface UserRegistrationAuthFormProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
@@ -34,9 +34,9 @@ export function UserRegistrationAuthForm({
 
 	async function onSubmit(event: React.FormEvent) {
 		event.preventDefault();
-		setIsLoading(true);
 
 		try {
+			setIsLoading(true);
 			const res = await fetch("api/register", {
 				method: "POST",
 				body: JSON.stringify({
@@ -49,21 +49,17 @@ export function UserRegistrationAuthForm({
 				},
 			});
 			if (res.ok) {
-				//redirect to the email verification page
-				router.push('/email-verification');
+				//A Toast Notification that alerts the user if there was a problem during the registration
 				toast.success('Registration Successful');
-				/*
-				TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE REGISTRATION PROCESS WAS SUCCESSFUL
-				*/
 
+				//Redirect to the email verification page
+				router.push('/email-verification');
 				/*
 				TODO CHANGE THE FEATURE SO THAT UPON SUCCESSFUL REGISTRATION, THE USER WILL BE PUSHED TO THE EMAIL VERIFICATION PAGE.
 				*/
 			}
-		} catch (error) {
-			/*
-			TODO ADD A TOAST NOTIFICATION THAT WILL NOTIFY THE USER IF THERE WAS A PROBLEM DURING THE REGISTRATION PROCESS
-			*/
+		} catch (error: any) {
+			//A Toast Notification that alerts the user if there was a problem during the registration
 			toast.error('Something Went Wrong');
 		}
 		setTimeout(() => {
