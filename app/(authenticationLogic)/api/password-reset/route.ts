@@ -4,3 +4,6 @@ This is the Password Reset API endpoint that will handle all the password reset 
 ****THIS ROUTE ONLY ACCEPTS POST REQUESTS****
 
 */
+/*
+TODO ADD THE PASSWORD RESET ROUTE SO THAT A USER CAN RESET THEIR PASSWORD
+*/

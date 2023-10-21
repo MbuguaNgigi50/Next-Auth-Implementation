@@ -6,3 +6,7 @@ The account will then be activated once the user accesses the link in order to c
 ****THIS ROUTE ONLY ACCEPTS POST REQUESTS****
 
 */
+
+/*
+TODO ADD THE EMAIL VERIFICATION ROUTE SO THAT A USER CAN ACTIVATE THEIR ACCOUNT AFTER REGISTRATION 
+*/
