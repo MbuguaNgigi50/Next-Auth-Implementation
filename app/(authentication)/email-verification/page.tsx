@@ -6,5 +6,5 @@
 */
 
 export default function EmailVerification() {
-	return <div>This is the EmailVerification page</div>;
+	return <div>This is the Email Verification page</div>;
 }

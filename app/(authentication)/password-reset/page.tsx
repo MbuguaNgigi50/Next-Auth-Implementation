@@ -7,5 +7,5 @@ The route will be located in the (authenticationLogic)/api/auth/password-reset f
 */
 
 export default function PasswordReset() {
-	return <div>This is the PasswordReset page</div>;
+	return <div>This is the Password Reset page</div>;
 }
