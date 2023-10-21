@@ -22,7 +22,21 @@ export async function POST(request: Request) {
         */
 		const { fullName, email, password } = await request.json();
 
-		//User Registration Validation
+		/*
+		User Registration Validation. Checking if a user with that email address already exist
+		*/
+		const emailExists = await prisma.user.findUnique({
+			where: {
+				email
+			}
+		})
+
+		if (emailExists) {
+			return NextResponse.json({
+				user: null,
+				message: 'Email Already Exists'
+			}, {status: 202})
+		}
 
 		/*
         This is where the user's password is hashed. The API receives the password from the Registration Form and applies a hashing algorithm consistently to it.
@@ -49,7 +63,8 @@ export async function POST(request: Request) {
 				name: user.name,
 				email: user.email,
 			},
-		});
+		}, { status: 201 });
+		
 	} catch (err: any) {
 		return (
 			new NextResponse(

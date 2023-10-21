@@ -57,6 +57,10 @@ export function UserRegistrationAuthForm({
 				/*
 				TODO CHANGE THE FEATURE SO THAT UPON SUCCESSFUL REGISTRATION, THE USER WILL BE PUSHED TO THE EMAIL VERIFICATION PAGE.
 				*/
+
+				/*
+				TODO MAKE A TOAST NOTIFICATION TO ALERT THE USER THAT THE EMAIL ALREADY EXIST
+				*/
 			}
 		} catch (error: any) {
 			//A Toast Notification that alerts the user if there was a problem during the registration
