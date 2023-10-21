@@ -39,9 +39,9 @@ export function UserLoginAuthForm({
 
 	async function onSubmit(event: React.FormEvent) {
 		event.preventDefault();
-		setIsLoading(true);
 
 		try {
+			setIsLoading(true);
 			const res = await signIn("credentials", {
 				redirect: false,
 				email,
