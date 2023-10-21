@@ -26,7 +26,7 @@ export function UserLoginAuthForm({
 	//These states will be used to store the user input during the registration phase
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
-	//const [error, setError] = React.useState("");
+	const [error, setError] = React.useState("");
 
 	/*
 	Search Parameters. This will call out the callbackUrl and take us there upon sign up or sign in. If the callbackUrl does not exist, it will default to the dashboard
@@ -52,11 +52,23 @@ export function UserLoginAuthForm({
 				//redirect to the sign in page
 				router.push(callbackUrl);
 				toast.success("Login Successful");
-				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE LOGIN PROCESS WAS SUCCESSFUL
+				/* 
+				TODO: ADD A TOAST NOTIFICATION TO SHOW THAT THE LOGIN PROCESS WAS SUCCESSFUL
+				*/
+
+				/*
+				FIXME FIX THE TOAST NOTIFICATION AS WELL AS THE REDIRECT
+				*/
 			} else {
 				toast.error("Invalid Email or Password");
-				//setError("Invalid Email or Password");
-				//TODO ADD A TOAST NOTIFICATION FEATURE THAT WILL SHOW THE USER THAT THE LOGIN PROCESS FAILED
+				setError("Invalid Email or Password");
+				/*
+				TODO:ADD A TOAST NOTIFICATION TO SHOW THAT THE LOGIN PROCESS FAILED
+				*/
+
+				/*
+				FIXME FIX THE TOAST NOTIFICATION AS WELL AS THE REDIRECT
+				*/
 			}
 		} catch (err: any) {
 			toast.error('Something Went Wrong')
