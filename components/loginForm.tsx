@@ -41,13 +41,13 @@ export function UserLoginAuthForm({
 
 		try {
 			setIsLoading(true);
-			const res = await signIn('credentials', {
+			const response = await signIn('credentials', {
 				redirect: false,
 				email,
 				password,
 				callbackUrl,
 			});
-			if (!res?.error) {
+			if (!response?.error) {
 				//A Toast Notification that alerts the user that the login was successful
 				toast.success('Login Successful');
 
@@ -67,6 +67,14 @@ export function UserLoginAuthForm({
 		}, 3000);
 	}
 
+	/* 
+	TODO ADD FORM VALIDATION WITH ZOD
+	*/
+
+	/* 
+	TODO MAKE THE FORM RESPONSIVE
+	*/
+	
 	return (
 		<div className={cn('grid gap-6', className)} {...props}>
 			<form onSubmit={onSubmit}>

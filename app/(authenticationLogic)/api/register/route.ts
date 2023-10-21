@@ -32,10 +32,14 @@ export async function POST(request: Request) {
 		})
 
 		if (emailExists) {
-			return NextResponse.json({
-				user: null,
-				message: 'Email Already Exists'
-			}, {status: 202})
+			return NextResponse.json(
+				{
+					user: null,
+					message: 'Email Already Exists',
+				},
+				//Status Code (202): Failed Registration - Email Already Exists
+				{ status: 202 }
+			);
 		}
 
 		/*
@@ -58,12 +62,17 @@ export async function POST(request: Request) {
 			},
 		});
 
-		return NextResponse.json({
-			user: {
-				name: user.name,
-				email: user.email,
+		return NextResponse.json(
+			{
+				user: {
+					name: user.name,
+					email: user.email,
+					message: 'Registration Successful'
+				},
 			},
-		}, { status: 201 });
+			//Status Code (201): Successful Registration
+			{ status: 201 }
+		);
 		
 	} catch (err: any) {
 		return (

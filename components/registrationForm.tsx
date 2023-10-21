@@ -25,9 +25,9 @@ export function UserRegistrationAuthForm({
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	//These states will be used to store the user input during the registration phase
-	const [fullName, setFullName] = React.useState("");
-	const [email, setEmail] = React.useState("");
-	const [password, setPassword] = React.useState("");
+	const [fullName, setFullName] = React.useState('');
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
 
 	//Router
 	const router = useRouter();
@@ -37,30 +37,34 @@ export function UserRegistrationAuthForm({
 
 		try {
 			setIsLoading(true);
-			const res = await fetch("api/register", {
-				method: "POST",
+			const response = await fetch('api/register', {
+				method: 'POST',
 				body: JSON.stringify({
 					fullName,
 					email,
 					password,
 				}),
 				headers: {
-					"Content-Type": "application/json",
+					'Content-Type': 'application/json',
 				},
 			});
-			if (res.ok) {
+			if (response.status == 201) {
 				//A Toast Notification that alerts the user if there was a problem during the registration
 				toast.success('Registration Successful');
 
-				//Redirect to the email verification page
-				router.push('/email-verification');
-				/*
-				TODO CHANGE THE FEATURE SO THAT UPON SUCCESSFUL REGISTRATION, THE USER WILL BE PUSHED TO THE EMAIL VERIFICATION PAGE.
-				*/
+				//Redirected to the Sign In Page where they can log in
+				signIn();
 
 				/*
-				TODO MAKE A TOAST NOTIFICATION TO ALERT THE USER THAT THE EMAIL ALREADY EXIST
+				Redirect to the email verification page where they will activate their account
+				router.push('/email-verification');
+				
+				TODO CREATE THE EMAIL VERIFICATION PAGE
+
 				*/
+			} else if (response.status == 202) {
+				//A Toast Notification that alerts the user if there was a problem during the registration
+				toast.error('Email Already Exists');
 			}
 		} catch (error: any) {
 			//A Toast Notification that alerts the user if there was a problem during the registration
@@ -71,8 +75,16 @@ export function UserRegistrationAuthForm({
 		}, 3000);
 	}
 
+	/* 
+	TODO ADD FORM VALIDATION WITH ZOD
+	*/
+
+	/* 
+	TODO MAKE THE FORM RESPONSIVE
+	*/
+
 	return (
-		<div className={cn("grid gap-6", className)} {...props}>
+		<div className={cn('grid gap-6', className)} {...props}>
 			<form onSubmit={onSubmit}>
 				<div className="grid gap-2">
 					<div className="grid gap-1">
@@ -138,7 +150,7 @@ export function UserRegistrationAuthForm({
 					<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
 				) : (
 					<Icons.google className="mr-2 h-4 w-4" />
-				)}{" "}
+				)}{' '}
 				Google
 			</Button>
 		</div>
