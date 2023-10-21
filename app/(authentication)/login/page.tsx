@@ -7,17 +7,17 @@
 - There is a password reset link that is also available on this page that will direct the user to the Password reset page in the event that the user is having trouble with logging in. 
 */
 
-import { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
+import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { cn } from "../../../lib/utils";
-import { buttonVariants } from "../../../components/ui/button";
-import { UserLoginAuthForm } from "../../../components/loginForm";
+import { cn } from '../../../lib/utils';
+import { buttonVariants } from '../../../components/ui/button';
+import { UserLoginAuthForm } from '../../../components/loginForm';
 
 export const metadata: Metadata = {
-	title: "Login to your Account",
-	description: "Login Flow.",
+	title: 'Login to your Account',
+	description: 'Login Flow.',
 };
 
 export default function LoginPage() {
@@ -27,8 +27,8 @@ export default function LoginPage() {
 				<Link
 					href="/register"
 					className={cn(
-						buttonVariants({ variant: "ghost" }),
-						"absolute right-4 top-4 md:right-8 md:top-8"
+						buttonVariants({ variant: 'ghost' }),
+						'absolute right-4 top-4 md:right-8 md:top-8'
 					)}
 				>
 					Register

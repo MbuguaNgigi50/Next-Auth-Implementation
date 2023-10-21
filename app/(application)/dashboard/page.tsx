@@ -1,4 +1,4 @@
-import { LogoutButton } from "../../auth";
+import { LogoutButton } from '../../auth';
 
 export default function Dashboard() {
 	return (

@@ -10,9 +10,9 @@ The registration process involves signing up with:
 
 */
 
-import { hash } from "bcrypt";
-import prisma from "../../../../lib/prisma";
-import { NextResponse } from "next/server";
+import { hash } from 'bcrypt';
+import prisma from '../../../../lib/prisma';
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
 	try {
@@ -27,9 +27,9 @@ export async function POST(request: Request) {
 		*/
 		const emailExists = await prisma.user.findUnique({
 			where: {
-				email
-			}
-		})
+				email,
+			},
+		});
 
 		if (emailExists) {
 			return NextResponse.json(
@@ -67,13 +67,12 @@ export async function POST(request: Request) {
 				user: {
 					name: user.name,
 					email: user.email,
-					message: 'Registration Successful'
+					message: 'Registration Successful',
 				},
 			},
 			//Status Code (201): Successful Registration
 			{ status: 201 }
 		);
-		
 	} catch (err: any) {
 		return (
 			new NextResponse(

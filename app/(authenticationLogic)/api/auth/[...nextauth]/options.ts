@@ -1,38 +1,38 @@
 /*
 Importing all the relevant packages that are necessary for this to work
 */
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import NextAuth, { type NextAuthOptions } from 'next-auth';
 //Importing the credentials provider to enable signing in via credentials
-import CredentialsProvider from "next-auth/providers/credentials";
+import CredentialsProvider from 'next-auth/providers/credentials';
 //Importing the prisma client from the lib folder
-import prisma from "../../../../../lib/prisma";
+import prisma from '../../../../../lib/prisma';
 //Importing Bcrypt to hash and encrypt passwords
-import { compare } from "bcrypt";
+import { compare } from 'bcrypt';
 
 export const authOptions: NextAuthOptions = {
 	session: {
-		strategy: "jwt",
+		strategy: 'jwt',
 	},
 	pages: {
 		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
-    signIn: '/login',
+		signIn: '/login',
 	},
 	//debug: process.env.NODE_ENV === 'development',
 	//secret: process.env.NEXTAUTH_SECRET,
 	providers: [
 		CredentialsProvider({
 			//The Credentials Provider allows for signing in via Credentials(Email and Password)
-			name: "Credentials",
+			name: 'Credentials',
 			credentials: {
 				email: {
-					label: "Email",
-					type: "email",
-					placeholder: "Email",
+					label: 'Email',
+					type: 'email',
+					placeholder: 'Email',
 				},
 				password: {
-					label: "Password",
-					type: "password",
-					placeholder: "Password",
+					label: 'Password',
+					type: 'password',
+					placeholder: 'Password',
 				},
 			},
 			async authorize(credentials) {
@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
 
 				// Returns null if a user does not exist in the database
 				if (!user) {
-					throw new Error("User does not exist");
+					throw new Error('User does not exist');
 				}
 
 				// Comparing the hashed password that is stored in the database to the one that the user has just entered during the sign in flow
@@ -62,14 +62,14 @@ export const authOptions: NextAuthOptions = {
 
 				// Returns an error if the password entered by the user is invalid
 				if (!isPasswordValid) {
-					throw new Error("Invalid Credentials");
+					throw new Error('Invalid Credentials');
 				}
 
 				return {
-					id: user.id + "",
+					id: user.id + '',
 					email: user.email,
 					name: user.name,
-					randomKey: "Hey Cool",
+					randomKey: 'Hey Cool',
 				};
 			},
 		}),
@@ -77,7 +77,7 @@ export const authOptions: NextAuthOptions = {
 	callbacks: {
 		//Handles the session object that is passed around and used whenever the session is fetched
 		session: ({ session, token }) => {
-			console.log("Session Callback", { session, token });
+			console.log('Session Callback', { session, token });
 
 			return {
 				...session,
@@ -92,7 +92,7 @@ export const authOptions: NextAuthOptions = {
 		//The user param is only passed into this function the first time the user logs in. This can be through OAuth or Credentials
 		//It has to be checked to see if there is a user object before using it then taking some of the properties and adding them to the JWT
 		jwt: ({ token, user }) => {
-			console.log("JWT Callback", { token, user });
+			console.log('JWT Callback', { token, user });
 			if (user) {
 				const u = user as unknown as any;
 				return {

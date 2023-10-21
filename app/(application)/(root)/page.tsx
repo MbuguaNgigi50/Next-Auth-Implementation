@@ -1,7 +1,7 @@
-import { LoginButton } from "../../auth";
+import { LoginButton } from '../../auth';
 
 export default function Home() {
-  return (
+	return (
 		<main>
 			<div>This is the homepage</div>
 			<LoginButton />

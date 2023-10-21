@@ -74,7 +74,7 @@ export function UserLoginAuthForm({
 	/* 
 	TODO MAKE THE FORM RESPONSIVE
 	*/
-	
+
 	return (
 		<div className={cn('grid gap-6', className)} {...props}>
 			<form onSubmit={onSubmit}>
