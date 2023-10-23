@@ -7,8 +7,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 //Importing the prisma client from the lib folder
 import prisma from '../../../../../lib/prisma';
 //Importing Bcrypt to hash and encrypt passwords
-import { compare } from 'bcrypt';
-//Importing the JWT library
+import { compare, compareSync } from 'bcrypt';
+//Importing JWT libraries
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
 
@@ -64,12 +64,7 @@ export const authOptions: NextAuthOptions = {
 					throw new Error('Invalid Credentials');
 				}
 
-				return {
-					id: user.id + '',
-					email: user.email,
-					name: user.name,
-					randomKey: 'Hey Cool',
-				};
+				return user;
 			},
 		}),
 	],
@@ -78,6 +73,7 @@ export const authOptions: NextAuthOptions = {
 	TODO
 	*ADD VALIDATION WITH ZOD
 	*/
+	//This will be used to sign the JWT
 	secret: process.env.NEXTAUTH_SECRET,
 
 	//Adding JWT functionality to encode and decode the JWTs
@@ -111,8 +107,9 @@ export const authOptions: NextAuthOptions = {
 		updateAge: 24 * 60 * 60//This is the update age of the token. It is how frequently it will be updated which is everyday
 	},
 	callbacks: {
-		//Handles the session object that is passed around and used whenever the session is fetched
+		//Handles the session object that is passed around and used whenever the session is fetched	
 		async session(params: { session: Session; token: JWT; user: User }) {
+			//If it is a valid session, then using the decoded token to set the right variables to the user
 			if (params.session.user) {
 				params.session.user.email = params.token.email;
 			}
@@ -126,6 +123,7 @@ export const authOptions: NextAuthOptions = {
 			isNewUser?: boolean | undefined;
 		}) {
 			if (params.user) {
+				//Setting the email inside of the token
 				params.token.email = params.user.email;
 			}
 			return params.token;
