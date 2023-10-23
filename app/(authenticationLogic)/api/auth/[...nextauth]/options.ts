@@ -1,24 +1,23 @@
 /*
 Importing all the relevant packages that are necessary for this to work
 */
-import NextAuth, { type NextAuthOptions } from 'next-auth';
+import NextAuth, { Session, type NextAuthOptions, User, Account, Profile } from 'next-auth';
 //Importing the credentials provider to enable signing in via credentials
 import CredentialsProvider from 'next-auth/providers/credentials';
 //Importing the prisma client from the lib folder
 import prisma from '../../../../../lib/prisma';
 //Importing Bcrypt to hash and encrypt passwords
 import { compare } from 'bcrypt';
+//Importing the JWT library
+import jwt from 'jsonwebtoken';
+import { JWT } from 'next-auth/jwt';
 
 export const authOptions: NextAuthOptions = {
-	session: {
-		strategy: 'jwt',
-	},
 	pages: {
 		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
 		signIn: '/login',
 	},
 	//debug: process.env.NODE_ENV === 'development',
-	//secret: process.env.NEXTAUTH_SECRET,
 	providers: [
 		CredentialsProvider({
 			//The Credentials Provider allows for signing in via Credentials(Email and Password)
@@ -74,36 +73,64 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
-	callbacks: {
-		//Handles the session object that is passed around and used whenever the session is fetched
-		session: ({ session, token }) => {
-			console.log('Session Callback', { session, token });
+	//The Secret will be used to encode the JWT that will be used to store the session
+	/*
+	TODO
+	*ADD VALIDATION WITH ZOD
+	*/
+	secret: process.env.NEXTAUTH_SECRET,
 
-			return {
-				...session,
-				user: {
-					...session.user,
-					id: token.id,
-					randomKey: token.randomKey,
-				},
-			};
-		},
-		//Handles the creation and management of the JWT token
-		//The user param is only passed into this function the first time the user logs in. This can be through OAuth or Credentials
-		//It has to be checked to see if there is a user object before using it then taking some of the properties and adding them to the JWT
-		jwt: ({ token, user }) => {
-			console.log('JWT Callback', { token, user });
-			if (user) {
-				const u = user as unknown as any;
-				return {
-					...token,
-					id: u.id,
-					randomKey: u.randomKey,
-				};
+	//Adding JWT functionality to encode and decode the JWTs
+	jwt: {
+		async encode({ secret, token }) {
+			//If the token does not exist or is invalid, we are returning undefined
+			if (!token) {
+				throw new Error('No token to encode');
 			}
-			return token;
+			return jwt.sign(token, secret);
+		},
+
+		async decode({ secret, token }) {
+			//If the token does not exist or is invalid, we are returning undefined
+			if (!token) {
+				throw new Error('No token to decode');
+			}
+			const decodeToken = jwt.verify(token, secret);
+			if (typeof decodeToken === 'string') {
+				//If the decodeToken is a string, trying to parse it a JSON object. If an error occurs, the string is invalid.
+				return JSON.parse(decodeToken);
+			} else {
+				//Returning the JwtPayload
+				return decodeToken;
+			}
 		},
 	},
+	session: {
+		strategy: 'jwt',// This is the session strategy
+		maxAge: 30 * 24 * 60 * 60,//This is the maximum age of the token which is 30 days
+		updateAge: 24 * 60 * 60//This is the update age of the token. It is how frequently it will be updated which is everyday
+	},
+	callbacks: {
+		//Handles the session object that is passed around and used whenever the session is fetched
+		async session(params: { session: Session; token: JWT; user: User }) {
+			if (params.session.user) {
+				params.session.user.email = params.token.email;
+			}
+			return params.session;
+		},
+		async jwt(params: {
+			token: JWT;
+			user?: User | undefined;
+			account?: Account | null | undefined;
+			profile?: Profile | undefined;
+			isNewUser?: boolean | undefined;
+		}) {
+			if (params.user) {
+				params.token.email = params.user.email;
+			}
+			return params.token;
+		}
+	}
 };
 
 const handler = NextAuth(authOptions);
