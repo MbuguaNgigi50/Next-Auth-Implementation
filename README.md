@@ -1,4 +1,4 @@
-# SaaS Management Dashboard
+# SaaS
 
 This is a one-stop hub for managing all your e-commerce websites, managing revenue and customer retention. This is built with everything new in Next.js 13.[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
