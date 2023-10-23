@@ -5,9 +5,9 @@ import NextAuth, { Session, type NextAuthOptions, User, Account, Profile } from 
 //Importing the credentials provider to enable signing in via credentials
 import CredentialsProvider from 'next-auth/providers/credentials';
 //Importing the prisma client from the lib folder
-import prisma from '../../../../../lib/prisma';
+import prisma from '@/lib/prisma';
 //Importing Bcrypt to hash and encrypt passwords
-import { compare, compareSync } from 'bcrypt';
+import { compare } from 'bcrypt';
 //Importing JWT libraries
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
