@@ -59,7 +59,8 @@ export function UserRegistrationAuthForm({
 				Redirect to the email verification page where they will activate their account
 				router.push('/email-verification');
 				
-				TODO CREATE THE EMAIL VERIFICATION PAGE
+				TODO 
+				*CREATE THE EMAIL VERIFICATION PAGE
 
 				*/
 			} else if (response.status == 202) {
@@ -76,11 +77,14 @@ export function UserRegistrationAuthForm({
 	}
 
 	/* 
-	TODO ADD FORM VALIDATION WITH ZOD
+	TODO 
+	*ADD FORM VALIDATION WITH ZOD
 	*/
 
 	/* 
-	TODO MAKE THE FORM RESPONSIVE
+	TODO 
+	*MAKE THE FORM RESPONSIVE
+    *ADD THE ABILITY TO VIEW YOUR PASSWORD
 	*/
 
 	return (
