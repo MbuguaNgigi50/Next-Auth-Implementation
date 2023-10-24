@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 
 //Next && Next-Auth Packages
 import { signIn, useSession } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 interface UserLoginAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -41,7 +41,7 @@ export function UserLoginAuthForm({
 		if (session?.status === 'authenticated') {
 			//console.log('Authenticated');
 			router.refresh();
-			router.push('/dashboard');
+			router.push('/');
 		}
 	}, [session?.status, router]);
 

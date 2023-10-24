@@ -40,7 +40,7 @@ export function UserRegistrationAuthForm({
 		if (session?.status === 'authenticated') {
 			//console.log('Authenticated');
 			router.refresh();
-			router.push('/dashboard');
+			router.push('/');
 		}
 	}, [session?.status, router]);
 
