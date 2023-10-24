@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 //Next-Auth Packages
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
@@ -21,6 +21,9 @@ export function UserRegistrationAuthForm({
 	className,
 	...props
 }: UserRegistrationAuthFormProps) {
+	//Importing Session Hooks
+	const session = useSession();
+
 	//This state will be for the loading spinner
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -31,6 +34,15 @@ export function UserRegistrationAuthForm({
 
 	//Router
 	const router = useRouter();
+
+	//Adding a useEffect to check if the user is authenticated
+	React.useEffect(() => {
+		if (session?.status === 'authenticated') {
+			//console.log('Authenticated');
+			router.refresh();
+			router.push('/pricing');
+		}
+	}, [session?.status, router]);
 
 	async function onSubmit(event: React.FormEvent) {
 		event.preventDefault();
@@ -53,7 +65,7 @@ export function UserRegistrationAuthForm({
 				toast.success('Registration Successful');
 
 				//Redirected to the Sign In Page where they can log in
-				signIn();
+				router.push('/login');
 
 				/*
 				Redirect to the email verification page where they will activate their account
@@ -81,11 +93,18 @@ export function UserRegistrationAuthForm({
 	*ADD FORM VALIDATION WITH ZOD
 	*/
 
-	/* 
+	/*
 	TODO 
 	*MAKE THE FORM RESPONSIVE
     *ADD THE ABILITY TO VIEW YOUR PASSWORD
 	*/
+
+	React.useEffect(() => {
+		if (status === 'authenticated') {
+			router.refresh();
+			router.push('/pricing');
+		}
+	}, [status]);
 
 	return (
 		<div className={cn('grid gap-6', className)} {...props}>

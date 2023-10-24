@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 //Next && Next-Auth Packages
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 
@@ -20,6 +20,11 @@ export function UserLoginAuthForm({
 	className,
 	...props
 }: UserLoginAuthFormProps) {
+	//Importing Session Hooks
+	const session = useSession();
+	//Router
+	const router = useRouter();
+
 	//This state will be for the loading spinner
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -30,41 +35,50 @@ export function UserLoginAuthForm({
 	/*
 	Search Parameters. This will call out the callbackUrl and take us there upon sign up or sign in. If the callbackUrl does not exist, it will default to the dashboard
 	 */
-	const searchParams = useSearchParams();
-	const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
 
-	//Router
-	const router = useRouter();
+	//Adding a useEffect to check if the user is authenticated
+	React.useEffect(() => {
+		if (session?.status === 'authenticated') {
+			//console.log('Authenticated');
+			router.refresh();
+			router.push('/pricing');
+		}
+	}, [session?.status, router]);
 
 	async function onSubmit(event: React.FormEvent) {
+		//Preventing the default form action
 		event.preventDefault();
 
 		try {
 			setIsLoading(true);
-			const response = await signIn('credentials', {
+			//Signing in with the Credentials Provider
+			signIn('credentials', {
 				redirect: false,
 				email,
 				password,
-				callbackUrl,
-			});
-			if (!response?.error) {
-				//A Toast Notification that alerts the user that the login was successful
-				toast.success('Login Successful');
+			})
+				.then((callback) => {
+					if (callback?.ok && !callback?.error) {
+						//A Toast Notification that alerts the user that the login was successful
+						toast.success('Login Successful');
 
-				//Redirects the user to the callbackUrl
-				router.push(callbackUrl);
-			} else {
-				//A Toast Notification that alerts the user that the credentials used are invalid
-				toast.error('Invalid Credentials');
-			}
+						//Redirects the user to the callbackUrl
+						router.push('/pricing');
+					}
+					if (callback?.error) {
+						//A Toast Notification that alerts the user that the credentials used are invalid
+						toast.error('Invalid Credentials');
+					}
+				})
+				.finally(() => {
+					setTimeout(() => {
+						setIsLoading(false);
+					}, 3000);
+				});
 		} catch (error: any) {
 			//A Toast Notification that alerts the user that the was a problem during the login
 			toast.error('Something Went Wrong');
 		}
-
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 3000);
 	}
 
 	/* 
@@ -72,7 +86,7 @@ export function UserLoginAuthForm({
 	*ADD FORM VALIDATION WITH ZOD
 	*/
 
-	/* 
+	/*
 	TODO 
 	*MAKE THE FORM RESPONSIVE
     *ADD THE ABILITY TO VIEW YOUR PASSWORD

@@ -1,7 +1,6 @@
-/*
-Importing all the relevant packages that are necessary for this to work
-*/
-import NextAuth, { Session, type NextAuthOptions, User, Account, Profile } from 'next-auth';
+//Importing all the relevant packages that are necessary for this to work
+import { Account, AuthOptions, Profile, Session, User } from "next-auth";
+import NextAuth from "next-auth/next";
 //Importing the credentials provider to enable signing in via credentials
 import CredentialsProvider from 'next-auth/providers/credentials';
 //Importing the prisma client from the lib folder
@@ -12,12 +11,8 @@ import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
 
-export const authOptions: NextAuthOptions = {
-	pages: {
-		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
-		signIn: '/login',
-	},
-	//debug: process.env.NODE_ENV === 'development',
+export const authOptions: AuthOptions = {
+	debug: process.env.NODE_ENV === 'development',
 	providers: [
 		CredentialsProvider({
 			//The Credentials Provider allows for signing in via Credentials(Email and Password)
@@ -34,7 +29,7 @@ export const authOptions: NextAuthOptions = {
 					placeholder: 'Password',
 				},
 			},
-			async authorize(credentials) {
+			authorize: async (credentials) => {
 				// Handling the Authorization functionality
 				// This checks whether the email or the password exists for a given user
 				if (!credentials?.email || !credentials.password) {
@@ -73,6 +68,11 @@ export const authOptions: NextAuthOptions = {
 	TODO
 	*ADD VALIDATION WITH ZOD
 	*/
+	pages: {
+		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
+		signIn: '/login',
+		signOut: '/',
+	},
 	//This will be used to sign the JWT
 	secret: process.env.NEXTAUTH_SECRET,
 
@@ -102,17 +102,18 @@ export const authOptions: NextAuthOptions = {
 		},
 	},
 	session: {
-		strategy: 'jwt',// This is the session strategy
-		maxAge: 30 * 24 * 60 * 60,//This is the maximum age of the token which is 30 days
-		updateAge: 24 * 60 * 60//This is the update age of the token. It is how frequently it will be updated which is everyday
+		strategy: 'jwt', // This is the session strategy
+		maxAge: 30 * 24 * 60 * 60, //This is the maximum age of the token which is 30 days
+		updateAge: 24 * 60 * 60, //This is the update age of the token. It is how frequently it will be updated which is everyday
 	},
 	callbacks: {
-		//Handles the session object that is passed around and used whenever the session is fetched	
+		//Handles the session object that is passed around and used whenever the session is fetched
 		async session(params: { session: Session; token: JWT; user: User }) {
 			//If it is a valid session, then using the decoded token to set the right variables to the user
 			if (params.session.user) {
 				params.session.user.email = params.token.email;
 			}
+			console.log('session callback', params.session);
 			return params.session;
 		},
 		async jwt(params: {
@@ -126,9 +127,11 @@ export const authOptions: NextAuthOptions = {
 				//Setting the email inside of the token
 				params.token.email = params.user.email;
 			}
+			//Returning the token
+			console.log('jwt callback', params.token);
 			return params.token;
-		}
-	}
+		},
+	},
 };
 
 const handler = NextAuth(authOptions);
