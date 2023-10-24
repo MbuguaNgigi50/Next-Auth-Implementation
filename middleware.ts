@@ -23,6 +23,6 @@ All other Routes not stated here will be protected by the Next-Auth.js Middlewar
 
 export const config = {
 	matcher: [
-		'/((?!register|login|api|password-reset|email-verification|about|faqs|features|pricing|privacy-policy|terms-and-conditions|_next/static|_next/image|favicon.ico).*)',
+		'/((?!register|login|dashboard|api|_next/static|_next/image|favicon.ico).*)',
 	],
 };
