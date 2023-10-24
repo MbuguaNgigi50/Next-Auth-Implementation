@@ -41,7 +41,7 @@ export function UserLoginAuthForm({
 		if (session?.status === 'authenticated') {
 			//console.log('Authenticated');
 			router.refresh();
-			router.push('/pricing');
+			router.push('/dashboard');
 		}
 	}, [session?.status, router]);
 

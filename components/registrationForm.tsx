@@ -40,7 +40,7 @@ export function UserRegistrationAuthForm({
 		if (session?.status === 'authenticated') {
 			//console.log('Authenticated');
 			router.refresh();
-			router.push('/pricing');
+			router.push('/dashboard');
 		}
 	}, [session?.status, router]);
 
@@ -98,13 +98,6 @@ export function UserRegistrationAuthForm({
 	*MAKE THE FORM RESPONSIVE
     *ADD THE ABILITY TO VIEW YOUR PASSWORD
 	*/
-
-	React.useEffect(() => {
-		if (status === 'authenticated') {
-			router.refresh();
-			router.push('/pricing');
-		}
-	}, [status]);
 
 	return (
 		<div className={cn('grid gap-6', className)} {...props}>
