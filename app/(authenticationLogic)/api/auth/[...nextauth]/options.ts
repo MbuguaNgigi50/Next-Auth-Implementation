@@ -7,7 +7,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 //Importing the prisma client from the lib folder
 import prisma from '@/lib/prisma';
 //Importing Bcrypt to hash and encrypt passwords
-import { compare } from 'bcrypt';
+import { compare } from 'bcryptjs';
 //Importing JWT libraries
 import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';

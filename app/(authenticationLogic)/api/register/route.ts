@@ -10,7 +10,7 @@ The registration process involves signing up with:
 
 */
 
-import { hash } from 'bcrypt';
+import { hash } from 'bcryptjs';
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
