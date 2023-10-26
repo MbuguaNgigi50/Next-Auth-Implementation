@@ -21,8 +21,8 @@ export function UserRegistrationAuthForm({
 	className,
 	...props
 }: UserRegistrationAuthFormProps) {
-	//Importing Session Hooks
-	const session = useSession();
+	//Importing Session Status Hooks
+	const {status} = useSession();
 
 	//This state will be for the loading spinner
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -34,15 +34,6 @@ export function UserRegistrationAuthForm({
 
 	//Router
 	const router = useRouter();
-
-	//Adding a useEffect to check if the user is authenticated
-	React.useEffect(() => {
-		if (session?.status === 'authenticated') {
-			//console.log('Authenticated');
-			router.refresh();
-			router.push('/');
-		}
-	}, [session?.status, router]);
 
 	async function onSubmit(event: React.FormEvent) {
 		event.preventDefault();
@@ -98,6 +89,15 @@ export function UserRegistrationAuthForm({
 	*MAKE THE FORM RESPONSIVE
     *ADD THE ABILITY TO VIEW YOUR PASSWORD
 	*/
+
+	//Adding a useEffect to check if the user is authenticated
+	React.useEffect(() => {
+		if (status === 'authenticated') {
+			//console.log('Authenticated');
+			router.refresh();
+			router.push('/dashboard');
+		}
+	}, [status, router]);
 
 	return (
 		<div className={cn('grid gap-6', className)} {...props}>

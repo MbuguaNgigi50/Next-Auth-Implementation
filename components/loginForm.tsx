@@ -20,8 +20,8 @@ export function UserLoginAuthForm({
 	className,
 	...props
 }: UserLoginAuthFormProps) {
-	//Importing Session Hooks
-	const session = useSession();
+	//Importing Session Status Hooks
+	const {status} = useSession();
 	//Router
 	const router = useRouter();
 
@@ -35,15 +35,6 @@ export function UserLoginAuthForm({
 	/*
 	Search Parameters. This will call out the callbackUrl and take us there upon sign up or sign in. If the callbackUrl does not exist, it will default to the dashboard
 	 */
-
-	//Adding a useEffect to check if the user is authenticated
-	React.useEffect(() => {
-		if (session?.status === 'authenticated') {
-			//console.log('Authenticated');
-			router.refresh();
-			router.push('/');
-		}
-	}, [session?.status, router]);
 
 	async function onSubmit(event: React.FormEvent) {
 		//Preventing the default form action
@@ -63,7 +54,7 @@ export function UserLoginAuthForm({
 						toast.success('Login Successful');
 
 						//Redirects the user to the callbackUrl
-						router.push('/pricing');
+						router.push('/dashboard');
 					}
 					if (callback?.error) {
 						//A Toast Notification that alerts the user that the credentials used are invalid
@@ -91,6 +82,15 @@ export function UserLoginAuthForm({
 	*MAKE THE FORM RESPONSIVE
     *ADD THE ABILITY TO VIEW YOUR PASSWORD
 	*/
+
+	//Adding a useEffect to check if the user is authenticated
+	React.useEffect(() => {
+		if (status === 'authenticated') {
+			//console.log('Authenticated');
+			router.refresh();
+			router.push('/dashboard');
+		}
+	}, [status, router]);
 
 	return (
 		<div className={cn('grid gap-6', className)} {...props}>

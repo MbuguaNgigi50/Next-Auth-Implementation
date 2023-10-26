@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-        serverActions: true
-    }
-}
+	experimental: {
+		serverComponentsExternalPackages: [
+			'@prisma/client',
+			'bcrypt',
+			'@types/bcrypt',
+		],
+	},
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

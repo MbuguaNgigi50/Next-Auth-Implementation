@@ -1,5 +1,6 @@
 //Importing all the relevant packages that are necessary for this to work
 import { Account, AuthOptions, Profile, Session, User } from "next-auth";
+//Importing NextAuth
 import NextAuth from "next-auth/next";
 //Importing the credentials provider to enable signing in via credentials
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -16,7 +17,7 @@ export const authOptions: AuthOptions = {
 	providers: [
 		CredentialsProvider({
 			//The Credentials Provider allows for signing in via Credentials(Email and Password)
-			name: 'Credentials',
+			name: 'credentials',
 			credentials: {
 				email: {
 					label: 'Email',
@@ -78,31 +79,34 @@ export const authOptions: AuthOptions = {
 
 	//Adding JWT functionality to encode and decode the JWTs
 	jwt: {
+		//Encoding the JWT
 		async encode({ secret, token }) {
 			//If the token does not exist or is invalid, we are returning undefined
 			if (!token) {
 				throw new Error('No token to encode');
 			}
+			//Returning the signed JWT
 			return jwt.sign(token, secret);
 		},
 
+		//Decoding the JWT
 		async decode({ secret, token }) {
 			//If the token does not exist or is invalid, we are returning undefined
 			if (!token) {
 				throw new Error('No token to decode');
 			}
-			const decodeToken = jwt.verify(token, secret);
-			if (typeof decodeToken === 'string') {
+			const decodedToken = jwt.verify(token, secret);
+			if (typeof decodedToken === 'string') {
 				//If the decodeToken is a string, trying to parse it a JSON object. If an error occurs, the string is invalid.
-				return JSON.parse(decodeToken);
+				return JSON.parse(decodedToken);
 			} else {
 				//Returning the JwtPayload
-				return decodeToken;
+				return decodedToken;
 			}
 		},
 	},
 	session: {
-		strategy: 'jwt', // This is the session strategy
+		strategy: 'jwt', // This is the session storage strategy
 		maxAge: 30 * 24 * 60 * 60, //This is the maximum age of the token which is 30 days
 		updateAge: 24 * 60 * 60, //This is the update age of the token. It is how frequently it will be updated which is everyday
 	},
