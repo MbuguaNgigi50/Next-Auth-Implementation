@@ -77,6 +77,7 @@ export const authOptions: AuthOptions = {
 	//This will be used to sign the JWT
 	secret: process.env.NEXTAUTH_SECRET,
 
+	/*
 	//Adding JWT functionality to encode and decode the JWTs
 	jwt: {
 		//Encoding the JWT
@@ -105,6 +106,7 @@ export const authOptions: AuthOptions = {
 			}
 		},
 	},
+	*/
 	session: {
 		strategy: 'jwt', // This is the session storage strategy
 		maxAge: 30 * 24 * 60 * 60, //This is the maximum age of the token which is 30 days
