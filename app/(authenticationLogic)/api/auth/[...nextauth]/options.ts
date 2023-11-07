@@ -1,7 +1,7 @@
 //Importing all the relevant packages that are necessary for this to work
-import { Account, AuthOptions, Profile, Session, User } from "next-auth";
+import { Account, AuthOptions, Profile, Session, User } from 'next-auth';
 //Importing NextAuth
-import NextAuth from "next-auth/next";
+import NextAuth from 'next-auth/next';
 //Importing the credentials provider to enable signing in via credentials
 import CredentialsProvider from 'next-auth/providers/credentials';
 //Importing the prisma client from the lib folder
@@ -44,8 +44,8 @@ export const authOptions: AuthOptions = {
 					},
 				});
 
-				// Returns null if a user does not exist in the database
-				if (!user) {
+				// Returns null if a user does not exist in the database. Also checks if the user exists if they had logged in via OAuth
+				if (!user || user?.password) {
 					throw new Error('User does not exist');
 				}
 
@@ -72,12 +72,9 @@ export const authOptions: AuthOptions = {
 	pages: {
 		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
 		signIn: '/login',
-		signOut: '/',
 	},
-	//This will be used to sign the JWT
+	//This will be used to encode the JWT
 	secret: process.env.NEXTAUTH_SECRET,
-
-	/*
 	//Adding JWT functionality to encode and decode the JWTs
 	jwt: {
 		//Encoding the JWT
@@ -106,7 +103,6 @@ export const authOptions: AuthOptions = {
 			}
 		},
 	},
-	*/
 	session: {
 		strategy: 'jwt', // This is the session storage strategy
 		maxAge: 30 * 24 * 60 * 60, //This is the maximum age of the token which is 30 days
@@ -119,7 +115,7 @@ export const authOptions: AuthOptions = {
 			if (params.session.user) {
 				params.session.user.email = params.token.email;
 			}
-			console.log('session callback', params.session);
+			console.log('Session Callback', params.session);
 			return params.session;
 		},
 		async jwt(params: {
@@ -134,7 +130,7 @@ export const authOptions: AuthOptions = {
 				params.token.email = params.user.email;
 			}
 			//Returning the token
-			console.log('jwt callback', params.token);
+			console.log('JWT Callback', params.token);
 			return params.token;
 		},
 	},

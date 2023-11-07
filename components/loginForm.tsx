@@ -58,7 +58,7 @@ export function UserLoginAuthForm({
 					}
 					if (callback?.error) {
 						//A Toast Notification that alerts the user that the credentials used are invalid
-						toast.error('Invalid Credentials');
+						toast.error(callback.error);
 					}
 				})
 				.finally(() => {
