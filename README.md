@@ -1,6 +1,6 @@
-# SaaS
+# Next-Auth Authentication with Next.js
 
-This is a one-stop hub for managing all your e-commerce websites, managing revenue and customer retention. This is built with everything new in Next.js 13.[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is built with everything new in Next.js 13.[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). This is an implementation of authentication using Next-Auth.js
 
 > **Warning**
 > This project is still in development and is not ready for production use.
@@ -20,11 +20,8 @@ This is a one-stop hub for managing all your e-commerce websites, managing reven
 ## Features
 
 - Authentication with Next-Auth.js - Registration and Login
-- Email Verification
-- Password Reset
-- Storefront with products and categories
-- Seller and customer workflows
-- Admin dashboard with stores, products, orders, subscriptions, and payments
+- Email Verification(TODO)
+- Password Reset(TODO)
 
 ## Deploying
 
