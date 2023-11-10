@@ -22,6 +22,8 @@ This is built with everything new in Next.js 13.[`create-next-app`](https://gith
 - Authentication with Next-Auth.js - Registration and Login
 - Email Verification(TODO)
 - Password Reset(TODO)
+- Email Provider(TODO)
+- Auth Providers(TODO)
 
 ## Deploying
 
