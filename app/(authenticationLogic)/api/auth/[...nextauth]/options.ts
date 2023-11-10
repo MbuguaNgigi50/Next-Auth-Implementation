@@ -9,7 +9,6 @@ import prisma from '@/lib/prisma';
 //Importing Bcrypt to hash and encrypt passwords
 import { compare } from 'bcryptjs';
 //Importing JWT libraries
-import jwt from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
 
 export const authOptions: AuthOptions = {
@@ -65,10 +64,7 @@ export const authOptions: AuthOptions = {
 		}),
 	],
 	//The Secret will be used to encode the JWT that will be used to store the session
-	/*
-	TODO
-	*ADD VALIDATION WITH ZOD
-	*/
+	
 	pages: {
 		//These will be the pages that Next-Auth will use for authentication instead of the in-built pages provided
 		signIn: '/login',
@@ -76,33 +72,7 @@ export const authOptions: AuthOptions = {
 	//This will be used to encode the JWT
 	secret: process.env.NEXTAUTH_SECRET,
 	//Adding JWT functionality to encode and decode the JWTs
-	jwt: {
-		//Encoding the JWT
-		async encode({ secret, token }) {
-			//If the token does not exist or is invalid, we are returning undefined
-			if (!token) {
-				throw new Error('No token to encode');
-			}
-			//Returning the signed JWT
-			return jwt.sign(token, secret);
-		},
-
-		//Decoding the JWT
-		async decode({ secret, token }) {
-			//If the token does not exist or is invalid, we are returning undefined
-			if (!token) {
-				throw new Error('No token to decode');
-			}
-			const decodedToken = jwt.verify(token, secret);
-			if (typeof decodedToken === 'string') {
-				//If the decodeToken is a string, trying to parse it a JSON object. If an error occurs, the string is invalid.
-				return JSON.parse(decodedToken);
-			} else {
-				//Returning the JwtPayload
-				return decodedToken;
-			}
-		},
-	},
+	
 	session: {
 		strategy: 'jwt', // This is the session storage strategy
 		maxAge: 30 * 24 * 60 * 60, //This is the maximum age of the token which is 30 days
